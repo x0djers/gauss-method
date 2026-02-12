@@ -13,5 +13,8 @@ typedef struct {
     size_t count;
 } GaussSolutions;
 
+GaussMatrixResult getGaussMatrix(MatrixOutcome inputMatrix);
+
+GaussSolutions getGaussSolutions(GaussMatrixResult gaussMatrix);
 
 #endif
