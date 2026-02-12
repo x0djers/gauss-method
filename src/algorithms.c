@@ -100,3 +100,54 @@ GaussMatrixResult getGaussMatrix(const MatrixOutcome inputMatrix) {
 
     return result;
 }
+
+GaussSolutions getSolutionsByBackAlgorithm(const MatrixOutcome matrix) {
+    GaussSolutions solutions = {NULL, 0};
+
+    solutions.values = malloc((matrix.matrix->cols - 1) * sizeof(MATRIX_TYPE));
+
+    if (solutions.values) {
+        size_t currentRow = matrix.matrix->rows - 1;
+        size_t currentColumn = matrix.matrix->cols - 2;
+
+        const size_t columnsCount = matrix.matrix->cols;
+
+        while ((int)currentRow >= 0) {
+            for (size_t colIter = currentColumn + 1;
+                 colIter < columnsCount - 1;
+                 colIter++) {
+                matrix.matrix->data[currentRow][columnsCount - 1] -=
+                    matrix.matrix->data[currentRow][colIter];
+            }
+
+            const MATRIX_TYPE solution =
+                matrix.matrix->data[currentRow][columnsCount - 1] /
+                matrix.matrix->data[currentRow][currentColumn];
+
+            solutions.values[currentColumn] = solution;
+            ++solutions.count;
+
+            for (size_t rowIter = currentRow - 1;
+                 (int)rowIter >= 0;
+                 rowIter--) {
+                    matrix.matrix->data[rowIter][currentColumn] *= solution;
+                 }
+
+            currentColumn--;
+            currentRow--;
+        }
+    }
+
+    return solutions;
+}
+
+GaussSolutions getGaussSolutions(const GaussMatrixResult gaussMatrix) {
+    GaussSolutions solutions = {NULL, 0};
+
+    if (gaussMatrix.matrix.errorCode == NONE_ERROR && gaussMatrix.matrix.matrix) {
+        const MatrixOutcome matrixCopy = getMatrixCopy(gaussMatrix.matrix);
+        solutions = getSolutionsByBackAlgorithm(matrixCopy);
+    }
+
+    return solutions;
+}

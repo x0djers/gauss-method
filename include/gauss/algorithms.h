@@ -8,4 +8,10 @@ typedef struct {
     size_t stepsCount;
 } GaussMatrixResult;
 
+typedef struct {
+    MATRIX_TYPE* values;
+    size_t count;
+} GaussSolutions;
+
+
 #endif
