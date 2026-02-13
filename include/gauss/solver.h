@@ -3,9 +3,10 @@
 
 #include <gauss/algorithms.h>
 
-
 GaussSolutions solveLinearSystemByGauss(MatrixOutcome coeffsMatrix);
 
 MatrixDeterminant calcDeterminantByGauss(MatrixOutcome coeffsMatrix);
+
+MatrixOutcome getInverseMatrixByGauss(MatrixOutcome coeffsMatrix);
 
 #endif
