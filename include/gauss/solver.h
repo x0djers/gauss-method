@@ -6,4 +6,6 @@
 
 GaussSolutions solveLinearSystemByGauss(MatrixOutcome coeffsMatrix);
 
+MatrixDeterminant calcDeterminantByGauss(MatrixOutcome coeffsMatrix);
+
 #endif
